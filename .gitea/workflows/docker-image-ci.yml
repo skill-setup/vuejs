@@ -19,7 +19,7 @@ jobs:
         run: docker build . --file Dockerfile --tag git.skill17.com/${{ github.repository }}
 
       - name: Login at Registry
-        run: echo "${{ secrets.PASSWORD }}" | docker login git.skill17.com -u root --password-stdin
+        run: echo "${{ secrets.PASSWORD }}" | docker login git.skill17.com -u ${{ secrets.USER }} --password-stdin
 
       - name: Push to Registry
         run: docker push git.skill17.com/${{ github.repository }}
