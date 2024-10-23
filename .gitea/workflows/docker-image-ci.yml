@@ -2,24 +2,25 @@ name: Docker Image CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
   pull_request:
-    branches:
-      - main
+    branches: [ "main" ]
 
 jobs:
+
   build:
+
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag git.skill17.com/${{ github.repository }}
-
-      - name: Login at Registry
-        run: echo "${{ secrets.PASSWORD }}" | docker login git.skill17.com -u ${{ secrets.USER }} --password-stdin
-
-      - name: Push to Registry
-        run: docker push git.skill17.com/${{ github.repository }}
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      # run: docker build . --file Dockerfile --tag ${{secrets.DOCKER_USER}}/skill17-laravel-base
+      run: docker build . --file Dockerfile --tag git.skill17.local/${{ secrets.USER }}/${{ github.repository }}
+    - name: docker login
+      env:
+        USER: ${{ secrets.USER }}
+        PASS: ${{ secrets.PASS }}
+      run: docker login -u $USER -p $PASS
+    - name: push to docker hub
+      run: docker push git.skill17.local/${{ secrets.USER }}/${{ github.repository }}
