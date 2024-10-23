@@ -16,11 +16,11 @@ jobs:
     - uses: actions/checkout@v3
     - name: Build the Docker image
       # run: docker build . --file Dockerfile --tag ${{secrets.DOCKER_USER}}/skill17-laravel-base
-      run: docker build . --file Dockerfile --tag git.skill17.local/${{ secrets.USER }}/${{ github.repository }}
+      run: docker build . --file Dockerfile --tag git.skill17.local/${{ github.repository }}
     - name: docker login
       env:
         USER: ${{ secrets.USER }}
         PASS: ${{ secrets.PASS }}
-      run: docker login -u $USER -p $PASS
+      run: docker login -u $USER -p $PASS git.skill17.local
     - name: push to docker hub
-      run: docker push git.skill17.local/${{ secrets.USER }}/${{ github.repository }}
+      run: docker push git.skill17.local/${{ github.repository }}
