@@ -1,4 +1,4 @@
-FROM git.skill17.com/images/node
+FROM node
 
 WORKDIR /app
 COPY package*.json ./
